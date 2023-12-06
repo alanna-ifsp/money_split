@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "167183680627",
+    "firebase_url": "https://testeatividade03-default-rtdb.firebaseio.com",
+    "project_id": "testeatividade03",
+    "storage_bucket": "testeatividade03.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:167183680627:android:9bc3df92156feb38d05606",
+        "android_client_info": {
+          "package_name": "com.example.atividade03_teste"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA4OY5IvLUa-1RXX9GTX5s06Rp-6gqJPhI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
