@@ -1,6 +1,7 @@
 // Data Provider para o banco de dados local sqflite
 // ignore_for_file: unused_import
 
+import 'package:atividade03_teste/model/movements_model.dart';
 import 'package:atividade03_teste/model/users.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -34,6 +35,12 @@ class RestDataProvider {
       data: user.toMap(),
     );
     return 41;
+  }
+
+  Future<int> inserMoviment(MovimentModel moviment) async {
+    Response response = await _dio.post(prefixUrl + suffixUrl, data:moviment.toMap());
+    return 42;
+    
   }
 
   Future<int> updateUser(id, UserModel user) async {

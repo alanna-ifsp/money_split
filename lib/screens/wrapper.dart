@@ -1,3 +1,4 @@
+import 'package:atividade03_teste/screens/movements_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -63,6 +64,7 @@ Widget authenticatedWidget(BuildContext context) {
         body: const TabBarView(
           children: [
             HistoricScreen(),
+            MovimentScreen(),
             FriendsScreen(),
           ],
         ),
@@ -70,7 +72,7 @@ Widget authenticatedWidget(BuildContext context) {
             title: const Text("Sua Página",
                 style: TextStyle(fontWeight: FontWeight.bold)),
             bottom: const TabBar(
-              tabs: [Tab(text: "Histórico"), Tab(text: "Amigos")],
+              tabs: [Tab(text: "Histórico"), Tab(text:"Gastos"),Tab(text: "Amigos")],
             )),
       ));
 }
