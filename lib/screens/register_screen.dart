@@ -15,7 +15,8 @@ class RegisterScreen extends StatelessWidget {
     UserModel user = UserModel();
 
     FocusNode myFocusNode = FocusNode();
-return BlocBuilder<ManageBloc, ManageState>(builder: (context, state) {
+
+// return BlocBuilder<ManageBloc, ManageState>(builder: (context, state) {
   
 return  Scaffold(
         body: Container(
@@ -269,6 +270,6 @@ return  Scaffold(
                   ],
                 ),
               )
-            ])));});
+            ])));
   }
 }

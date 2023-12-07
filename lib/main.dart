@@ -1,3 +1,4 @@
+import 'package:atividade03_teste/bloc/manage_provider.dart';
 import 'package:atividade03_teste/router.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -21,21 +22,25 @@ void main() async {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-
+class _MyAppState extends State<MyApp> {
+ 
   @override
   Widget build(BuildContext context) {
-    final AppRouter _appRouter = AppRouter();
     return MaterialApp(
-      title: 'Atividade 03',
+      title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.deepPurple,
+        primarySwatch: Colors.blue,
       ),
-      onGenerateRoute: _appRouter.onGenerateRoute,
-      // home: MultiBlocProvider(providers: [
-      //   BlocProvider(create: (context) => AuthBloc()),
-      //child: const Wrapper()));
-    );
+       home: MultiBlocProvider(providers: [
+          BlocProvider(create: (context) => AuthBloc()),
+          BlocProvider(create: (context) => ManageBloc())
+        ], 
+        child: const Wrapper()));
+    ;
   }
+}
+
+class MyApp extends StatefulWidget {
+  const MyApp({Key? key}) : super(key: key);
+  State<MyApp> createState() => _MyAppState();
 }
