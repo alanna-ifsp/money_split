@@ -16,8 +16,6 @@ class RegisterScreen extends StatelessWidget {
 
     FocusNode myFocusNode = FocusNode();
 
-// return BlocBuilder<ManageBloc, ManageState>(builder: (context, state) {
-  
 return  Scaffold(
         body: Container(
             alignment: Alignment.center,

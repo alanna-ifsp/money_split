@@ -1,5 +1,4 @@
 import 'package:atividade03_teste/bloc/manage_provider.dart';
-import 'package:atividade03_teste/router.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
