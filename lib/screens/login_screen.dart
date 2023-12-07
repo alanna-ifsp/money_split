@@ -8,7 +8,7 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     GlobalKey<FormState> formkey = GlobalKey();
-    FocusNode myFocusNode = new FocusNode();
+    FocusNode myFocusNode = FocusNode();
     String username = "";
     String password = "";
 
@@ -53,7 +53,7 @@ class LoginScreen extends StatelessWidget {
                               color: myFocusNode.hasFocus
                                   ? Colors.white
                                   : Colors.black),
-                          errorStyle: TextStyle(
+                          errorStyle: const TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
                               backgroundColor: Colors.red)),
@@ -67,7 +67,7 @@ class LoginScreen extends StatelessWidget {
                         username = inValue!;
                       },
                     ),
-                    SizedBox(height: 30),
+                    const SizedBox(height: 30),
                   ],
                 ),
                 Column(
@@ -89,7 +89,7 @@ class LoginScreen extends StatelessWidget {
                           hintText: 'Digite sua senha',
                           filled: true,
                           fillColor: Colors.white,
-                          errorStyle: TextStyle(
+                          errorStyle: const TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
                               backgroundColor: Colors.red)),
@@ -103,7 +103,7 @@ class LoginScreen extends StatelessWidget {
                         password = inValue!;
                       },
                     ),
-                    SizedBox(height: 30),
+                    const SizedBox(height: 30),
                   ],
                 ),
                 ElevatedButton(

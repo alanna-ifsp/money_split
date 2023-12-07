@@ -1,3 +1,4 @@
+import 'package:atividade03_teste/router.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -25,13 +26,16 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final AppRouter _appRouter = AppRouter();
     return MaterialApp(
-        title: 'Atividade 03',
-        theme: ThemeData(
-          primarySwatch: Colors.deepPurple,
-        ),
-        home: MultiBlocProvider(providers: [
-          BlocProvider(create: (context) => AuthBloc()),
-        ], child: const Wrapper()));
+      title: 'Atividade 03',
+      theme: ThemeData(
+        primarySwatch: Colors.deepPurple,
+      ),
+      onGenerateRoute: _appRouter.onGenerateRoute,
+      // home: MultiBlocProvider(providers: [
+      //   BlocProvider(create: (context) => AuthBloc()),
+      //child: const Wrapper()));
+    );
   }
 }
