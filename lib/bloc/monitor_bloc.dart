@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../model/users.dart';
-import '../provider/rest_provider.dart';
+import '../provider/rest_provider_user.dart';
 
 class MonitorBloc extends Bloc<MonitorEvent, MonitorState> {
 

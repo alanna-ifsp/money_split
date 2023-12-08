@@ -53,7 +53,7 @@ class WrapperState extends State<Wrapper> {
 
 Widget authenticatedWidget(BuildContext context) {
   return DefaultTabController(
-      length: 2,
+      length: 3,
       child: Scaffold(
         backgroundColor: const Color.fromARGB(255, 122, 86, 184),
         floatingActionButton: FloatingActionButton(
