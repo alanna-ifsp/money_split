@@ -1,17 +1,75 @@
+import 'package:atividade03_teste/model/movements.dart';
+import 'package:atividade03_teste/model/user_model.dart';
 import 'package:atividade03_teste/model/users.dart';
+import 'package:atividade03_teste/screens/friends_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:atividade03_teste/provider/rest_provider_user.dart';
+import 'package:atividade03_teste/provider/firebase_auth.dart';
+import 'package:atividade03_teste/model/movements_model.dart';
 
 var items = [];
 
-class HistoricScreen extends StatelessWidget {
+class HistoricScreen extends StatefulWidget {
   const HistoricScreen({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    items.clear();
-    for (var i = 0; i < 2; i++) {
-      items.add("$i");
+  State<HistoricScreen> createState() => _HistoricScreenState();
+}
+
+class _HistoricScreenState extends State<HistoricScreen> {
+  UserModel? authenticatedUser;
+
+  @override
+  void initState() {
+    super.initState();
+    getCurrentUserHistoric();
+  }
+
+  Future<void> getCurrentUserHistoric() async {
+    final FirebaseAuth auth = FirebaseAuth.instance;
+    final User? user = auth.currentUser;
+    final currentEmail = user?.email;
+
+    RestDataProvider restDataProvider = RestDataProvider.helper;
+    UserCollection allUsers = UserCollection();
+    allUsers = await restDataProvider.getUsersList();
+    for (int i = 0; i < allUsers.length(); i++) {
+      UserModel user = allUsers.getUserAtIndex(i);
+      if (currentEmail == user.getEmail) {
+        setState(() {
+          authenticatedUser = user;
+        });
+      }
     }
+    MovimentCollection allUserMovements = MovimentCollection();
+    allUserMovements = await restDataProvider.getMovimentList();
+    items.clear();
+    for (int i = 0; i < allUserMovements.length(); i++) {
+      MovimentModel movement = allUserMovements.getMovimentAtIndex(i);
+      if (movement.nomeDevedor == authenticatedUser?.getEmail) {
+        items.add([
+          "https://cdn-icons-png.flaticon.com/512/7737/7737848.png",
+          movement.descricao,
+          movement.getNomePagador,
+          movement.getNomeDevedor,
+          movement.getValor
+        ]);
+      }
+      if (movement.nomePagador == authenticatedUser?.getEmail) {
+        items.add([
+          "https://cdn-icons-png.flaticon.com/512/5997/5997669.png",
+          movement.descricao,
+          movement.getNomePagador,
+          movement.getNomeDevedor,
+          movement.getValor
+        ]);
+      }
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return SizedBox.expand(
         child: Container(
       decoration: const BoxDecoration(
@@ -19,8 +77,8 @@ class HistoricScreen extends StatelessWidget {
               image: AssetImage("assets/fundo.png"), fit: BoxFit.cover)),
       child: Column(
         children: [
-          const Text("Histórico",
-              style: TextStyle(
+          Text("Histórico de ${authenticatedUser?.getName}",
+              style: const TextStyle(
                   color: Colors.white,
                   fontSize: 35,
                   fontWeight: FontWeight.bold)),
@@ -33,63 +91,50 @@ class HistoricScreen extends StatelessWidget {
                           border: Border(
                               bottom:
                                   BorderSide(color: Colors.black, width: 3))),
-                      child: Row(
-                      
-                          children: [
-                            Container(
-                              height: 100,
-                              width: 100,
-                              padding: const EdgeInsets.all(10.0),
-                              decoration: BoxDecoration(
-                                gradient: const LinearGradient(colors: [
-                                  Color.fromARGB(255, 122, 86, 184),
-                                  Colors.white70,
-                                  Color.fromARGB(255, 122, 86, 184)
-                                ]),
-                                border: Border.all(
-                                  color: Colors.deepPurple,
-                                  width: 1,
-                                ),
-                                borderRadius: BorderRadius.circular(30),
-                              ),
-                              child: Image.network(
-                                  "https://cdn-icons-png.flaticon.com/512/1019/1019607.png"),
+                      child: Row(children: [
+                        Container(
+                          height: 100,
+                          width: 100,
+                          padding: const EdgeInsets.all(10.0),
+                          decoration: BoxDecoration(
+                            gradient: const LinearGradient(colors: [
+                              Color.fromARGB(255, 122, 86, 184),
+                              Colors.white70,
+                              Color.fromARGB(255, 122, 86, 184)
+                            ]),
+                            border: Border.all(
+                              color: Colors.deepPurple,
+                              width: 1,
                             ),
-                            const Column(children: [
-                              Row(children: [
-                                Text("Churras de Limeira",
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 10,
-                                        fontWeight: FontWeight.bold)),
-                                Text("Pagador: Pessoa01",
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 10,
-                                        fontWeight: FontWeight.bold)),
-                                Text("10,00",
-                                    style: const TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 10,
-                                        fontWeight: FontWeight.bold))
-                              ]),
-                              Row(children: [
-                                Text("Churras de Limeira",
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 10,
-                                        fontWeight: FontWeight.bold)),
-                                Text("Pagador: Pessoa02",
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 10,
-                                        fontWeight: FontWeight.bold)),
-                                Text("10,00",
-                                    style: const TextStyle(
-                                        color: Colors.white, fontSize: 10))
-                              ])
-                            ])
-                          ]));
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                          child: Image.network(items[index][0]),
+                        ),
+                        Column(children: [
+                          Row(children: [
+                            Text(items[index][1],
+                                style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 10,
+                                    fontWeight: FontWeight.bold)),
+                            Text(items[index][2],
+                                style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 10,
+                                    fontWeight: FontWeight.bold)),
+                            Text(items[index][3],
+                                style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 10,
+                                    fontWeight: FontWeight.bold)),
+                            Text((items[index][4]).toString(),
+                                style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 10,
+                                    fontWeight: FontWeight.bold)),
+                          ]),
+                        ])
+                      ]));
                 }),
           ),
         ],

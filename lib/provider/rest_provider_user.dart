@@ -1,6 +1,7 @@
 // Data Provider para o banco de dados local sqflite
 // ignore_for_file: unused_import
 
+import 'package:atividade03_teste/model/movements.dart';
 import 'package:atividade03_teste/model/movements_model.dart';
 import 'package:atividade03_teste/model/users.dart';
 import 'package:dio/dio.dart';
@@ -22,7 +23,6 @@ class RestDataProvider {
   String prefixUrl = "https://testeatividade03-default-rtdb.firebaseio.com";
   String suffixUrl = "/.json";
 
-
   Future<UserModel> getUser(uid) async {
     Response response = await _dio.get(prefixUrl + uid + suffixUrl);
     return UserModel.fromMap(response.data);
@@ -38,9 +38,9 @@ class RestDataProvider {
   }
 
   Future<int> inserMoviment(MovimentModel moviment) async {
-    Response response = await _dio.post(prefixUrl + suffixUrl, data:moviment.toMap());
+    Response response =
+        await _dio.post(prefixUrl + suffixUrl, data: moviment.toMap());
     return 42;
-    
   }
 
   Future<int> updateUser(id, UserModel user) async {
@@ -58,15 +58,26 @@ class RestDataProvider {
     return 42;
   }
 
-  
   Future<UserCollection> getUsersList() async {
     Response response = await _dio.get(prefixUrl + suffixUrl);
 
     UserCollection userCollection = UserCollection();
 
-    response.data.forEach((value) {
+    response.data.forEach((key, value) {
       UserModel user = UserModel.fromMap(value);
       userCollection.insertUserOfId(value["id"].toString(), user);
+    });
+    return userCollection;
+  }
+
+  Future<MovimentCollection> getMovimentList() async {
+    Response response = await _dio.get(prefixUrl + suffixUrl);
+
+    MovimentCollection userCollection = MovimentCollection();
+
+    response.data.forEach((key, value) {
+      MovimentModel moviment = MovimentModel.fromMap(value);
+      userCollection.insertUserOfId(value["id"].toString(), moviment);
     });
     return userCollection;
   }
@@ -92,13 +103,12 @@ class RestDataProvider {
       /*
        O servidor nos informa o dado que foi modificado.
       */
-    String username = data["username"];
-    String password = data["password"];
-    String name = data["name"];
-    int age = int.parse(data["age"]);
-    String pix = data["pix"];
-    String phoneNumber = data["phoneNumber"];
-
+      String username = data["username"];
+      String password = data["password"];
+      String name = data["name"];
+      int age = int.parse(data["age"]);
+      String pix = data["pix"];
+      String phoneNumber = data["phoneNumber"];
 
       String userId = data["userId"].toString();
       String title = data["title"];
